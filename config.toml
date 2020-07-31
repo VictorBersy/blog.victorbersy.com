@@ -1,0 +1,12 @@
+baseURL = "https://blog.victorbersy.com"
+languageCode = "fr-fr"
+title = "Blog de Victor Bersy"
+theme = "ananke"
+
+DefaultContentLanguage = "fr"
+
+[params]
+  twitter = "https://twitter.com/victorbersy"
+  github = "https://github.com/victorbersy"
+  linkedin = "https://linkedin.com/in/victor-bersy"
+  featured_image = "/bg.jpg"
