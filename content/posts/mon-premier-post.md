@@ -1,7 +1,7 @@
 ---
 title: "Nouveau blog"
 date: 2020-07-30T22:59:10+02:00
-draft: true
+draft: false
 ---
 
 # Pourquoi un blog ?
@@ -20,4 +20,4 @@ Principalement tech bien sûr. Étant SysOps aujourd'hui, ça sera du Docker, Ku
 
 Je trouve que ce côté personnel manque beaucoup au web d'aujourd'hui !
 
-Je souhaite également le plus possible partager tout ça facilement au plus grand monde, via RSS, et dans le meilleur anglais que je puisse écrire. 
+Je souhaite également le plus possible partager tout ça facilement au plus grand monde, via RSS, et dans le meilleur anglais que je puisse écrire.
