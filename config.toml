@@ -10,3 +10,4 @@ DefaultContentLanguage = "fr"
   github = "https://github.com/victorbersy"
   linkedin = "https://linkedin.com/in/victor-bersy"
   featured_image = "/bg.jpg"
+  show_reading_time = true
