@@ -7,7 +7,7 @@ featured_image: '5279ab2f63c6dc4856cb699e50080011.png'
 
 ## Contexte
 
-Chez Selectra, nous utilisons Docker sur tous nos environnements: du local à la production en passant par le pipeline de CI.
+Chez Selectra, nous utilisons Docker sur tous nos environnements: du local à la production en passant par les pipelines de CI.
 
 Nous avons de nombreux projets web actif, et comme la plupart de ces projets, ils nécessitent l'installation de dépendances:
 - Paquets PHP via composer
