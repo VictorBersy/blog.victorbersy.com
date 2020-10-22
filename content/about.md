@@ -1,13 +1,17 @@
 ---
-title: "À propos"
+title: "About me"
 type: page
 menu: main
 ---
 
-Passionné depuis son plus jeune âge par l'informatique, il a commencé par s'intéresser au matériel et s'est ensuite mis au développement logiciel. Après une autoformation en Ruby et Ruby on Rails, il commence sa carrière professionnel en 2014 chez Selectra. Il évolue rapidement en tant que Lead Ruby, CTO puis décide de se spécialiser en tant que SysOps.
+{{< figure src="/victor_bersy.jpg" title="Victor Bersy" >}}
 
-Il se met pour mission d'offrir les meilleurs outils aux développeurs pour leur permettre de livrer rapidement, sereinement, et garantissant des ressources suffisantes pour les applications déployées. Il souhaite également offrir les meilleures performances aux clients de Selectra répartis dans 15 pays.
+I'm an IT passionate since I was a kid. It started with computer hardware, then software development few years later. After learning few languages and frameworks, my love was growing for Ruby and its community, so I decided to look for a position with this language.
 
-Il utilise pour cela Terraform, AWS, Kubernetes, DataDog, SemaphoreCI, Docker et plus encore.
+I've started my professional career at Selectra in 2014, a booming self-funded startup in Paris, as a Ruby on Rails software engineer. As the company was growing fast, I quickly grew along too and became its CTO for four years. I then decided to move to a SysOps position in 2019.
 
-Ce blog reflète son désir de partager ses découvertes au plus grand nombre.
+My mission is to bring to our software engineers the best tools to develop, deploy and monitor our applications. I'm also making sure our customers has the best performances at the end and can use our applications in the best conditions on all the 15 countries we are in.
+
+To achieve that, I'm using Terraform, AWS, Kubernetes, DataDog, SemaphoreCI, Docker and even more.
+
+This blog was made to share my knowledge, trying to give back what gave me the opportunity to be where I am today.
