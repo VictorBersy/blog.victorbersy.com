@@ -1,9 +1,9 @@
 baseURL = "https://blog.victorbersy.com"
-languageCode = "fr-fr"
+languageCode = "en-us"
 title = "Blog de Victor Bersy"
 theme = "ananke"
 
-DefaultContentLanguage = "fr"
+DefaultContentLanguage = "en"
 
 [params]
   twitter = "https://twitter.com/victorbersy"
