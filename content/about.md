@@ -1,10 +1,7 @@
 ---
-title: "About me"
-type: page
-menu: main
+title: "About"
+date: 2020-09-13T13:00:09+02:00
 ---
-
-{{< figure src="/victor_bersy.jpg" title="Victor Bersy" >}}
 
 I'm an IT passionate since I was a kid. It started with computer hardware, then software development few years later. After learning few languages and frameworks, my love was growing for Ruby and its community, so I decided to look for a position with this language.
 
@@ -15,3 +12,5 @@ My mission is to bring to our software engineers the best tools to develop, depl
 To achieve that, I'm using Terraform, AWS, Kubernetes, DataDog, SemaphoreCI, Docker and even more.
 
 This blog was made to share my knowledge, trying to give back what gave me the opportunity to be where I am today.
+
+![Victor Bersy picture](/victor_bersy.jpg)

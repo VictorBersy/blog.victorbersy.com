@@ -1,13 +1,55 @@
-baseURL = "https://blog.victorbersy.com"
+baseURL = "https://blog.victorbersy.com/"
 languageCode = "en-us"
-title = "Blog de Victor Bersy"
-theme = "ananke"
+title = "Blog - Victor Bersy"
+theme = "archie"
 
-DefaultContentLanguage = "en"
+# Code Highlight
+pygmentsstyle = "solarized-dark"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+paginate = 5 # articles per page
 
 [params]
-  twitter = "https://twitter.com/victorbersy"
-  github = "https://github.com/victorbersy"
-  linkedin = "https://linkedin.com/in/victor-bersy"
-  featured_image = "/bg.jpg"
-  show_reading_time = true
+  mode = "auto" # color-mode → light,dark or auto
+  useCDN = false # don't use CDNs for fonts and icons, instead serve them locally.
+  customCSS = ["css/custom_colors.css"]
+
+# Social Tags
+
+[[params.social]]
+name = "Twitter"
+icon = "twitter"
+url = "https://twitter.com/victorbersy"
+
+[[params.social]]
+name = "Github"
+icon = "github"
+url = "https://github.com/victorbersy"
+
+[[params.social]]
+name = "Dev.to"
+icon = "code"
+url = "https://dev.to/victorbersy"
+
+[[params.social]]
+name = "Linkedin"
+icon = "linkedin"
+url = "https://linkedin.com/in/victor-bersy"
+
+# Main menu Items
+
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "All posts"
+url = "/posts"
+weight = 2
+
+[[menu.main]]
+name = "About"
+url = "/about"
+weight = 3

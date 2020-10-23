@@ -1,0 +1,29 @@
+:root {
+--maincolor: #FFA285;
+--bordercl: rebeccapurple;
+--callouctcolor: dodgerblue;
+--hovercolor: navy;
+--darkMaincolor: #8BF0EA;
+--darkBordercl: #23514E;
+}
+
+::-moz-selection {
+  background: var(--darkBordercl);
+  color: #fff;
+  text-shadow: none;
+}
+::selection {
+  background: var(--darkBordercl);
+  color: #fff;
+  text-shadow: none;
+}
+hr {
+  border-top: 3px dotted var(--darkBordercl);
+}
+blockquote {
+  border-color: var(--darkBordercl);
+}
+.draft-label {
+  color: var(--darkMaincolor);
+  background-color: var(--darkBordercl);
+}
