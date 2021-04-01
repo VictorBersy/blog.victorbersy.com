@@ -1,17 +1,16 @@
 ---
 title: "Improve Docker build time by using BuildKit and SemaphoreCI"
 date: 2020-09-13T13:00:09+02:00
-draft: true
-featured_image: '5279ab2f63c6dc4856cb699e50080011.png'
+draft: false
 ---
 
 ## Context
 
-At Selectra, we use Docker on all our environments: from local to production, including our CI pipelines.
+At Selectra, we use Docker on all our environments: from local to production, and for our CI pipelines.
 
 The first CI step is to build a Docker image that will be used during the whole pipeline, and eventually deployed if tests pass.
 
-[![Our CI pipeline](/2020-09-13-ci-pipeline.png)](/2020-09-13-ci-pipeline.png)
+[![Our CI pipeline](/2020-09-13-migrate-to-buildkit/ci-pipeline.png)](/2020-09-13-migrate-to-buildkit/ci-pipeline.png)
 
 The faster the build, the faster the tests and others things developers cares about will start, so it's crucial to not "waste" minutes on builds.
 
@@ -21,7 +20,7 @@ We mostly have web projects, and they all have some kind of dependencies:
 - PHP extensions
 - etc...
 
-All of this dependencies requires a lot of time to be installed. And so, in order to keep the build time as short as possible, caching these dependencies is an obvious solution.
+All of these dependencies can require a lot of time to be installed. And so, in order to keep the build time as short as possible, caching their installation could make our build much shorter.
 
 While most CI providers has tools to cache theses dependencies in a way or another, ideally, you'd like to cache Docker layers to make things easier. You won't have to setup different tools for different packages providers, and you can even cache others things like `apt-get`, `apk`, etc... that you might run during your build.
 
@@ -84,6 +83,8 @@ For example, `composer-build` and `npm-build` does not depend on each other, so 
 
 But you would have to write your own parser, or just come up with some bash scripts to do that, and maintain it over time too. That would be tedious! Specially when you know this dependency graph is already described in your Dockerfile.
 
+Maybe I'm missing something, but as far as I known, without BuildKit, you can't easily build stages in parallel.
+
 ### AWS ECR or any other remote registry are too slow to cache our stages
 
 Another issue that might depend on your CI provider: pushing Docker images to remote registry (AWS ECR, GCP Container Registry, etc...) is taking a long time.
@@ -91,6 +92,8 @@ Another issue that might depend on your CI provider: pushing Docker images to re
 Pulling/pushing each stage to a remote registry is going to take a significant amount of your build time step. Plus, it would clutter your registry with intermediate stages that you don't care about long-term wise.
 
 ## Solution: Using BuildKit
+
+To solve our issues related to caching and parallel builds, we are now using BuildKit.
 
 Thanks to [BuildKit project](https://github.com/moby/buildkit), we can easily solve all our issues with a single command:
 
@@ -111,12 +114,57 @@ What we are saying to BuildKit is:
   - This way all our tests tools will be there for next CI steps.
   - To create the release image, just change it to `--opt target=release` and name the new image as you'd like.
 
-## Solution: Use your CI provider private registry
+## Solution: Use your CI provider private Docker registry
 
 I'm not sure if others CI providers has something similar, but SemaphoreCI had the good idea to deploy their own Docker registry, where it's much faster to push your cache and images.
 
 The push time is excellent, much better than on AWS ECR.
 
+Thanks to this, we can use their private Docker registry to push/pull our intermediate stages and cache layers.
+
 ## Before / after + screenshots
 
-## Conclusion
+On a basic Laravel applications, here's the results.
+
+**Before BuildKit:**
+
+[![Before using BuildKit](/2020-09-13-migrate-to-buildkit/laravel-before.png)](/2020-09-13-migrate-to-buildkit/laravel-before.png)
+
+**After BuildKit:**
+
+[![After using BuildKit](/2020-09-13-migrate-to-buildkit/laravel-after.png)](/2020-09-13-migrate-to-buildkit/laravel-after.png)
+
+Before using BuildKit, the pipeline was taking around ~3min30s. It's now taking ~2min. Though, it depends on what cache layers needs to be rebuild. If none of them are changing, like if you are running again the same build and it's already cached, it takes ~14s.
+
+## What improvements I'd like to make?
+
+### Tracing our CI pipelines
+
+I'm a fan of observability and I want to apply this methodology on our CI/CD pipelines too. BuildKit comes with a way to export traces to Jaeger, and it can be visualized like so:
+
+[![BuildKit traces exported and visualized with Jaeger](/2020-09-13-migrate-to-buildkit/buildkit-traces.jpg)](/2020-09-13-migrate-to-buildkit/buildkit-traces.jpg)
+
+By doing so, we could track over time the build time easily for each step. We could see what impact our changes does have and on what steps. We can also avoid wasting time optimizing a step if there is another that takes 90% of the build time.
+
+### Move out from CI the push/tag release steps
+
+You may have noticed that I am building, pushing and tagging the release candidate image during the CI pipeline. I did not realized while upgrading our CI/CD pipelines that it does not make sense to have these things there.
+
+Ideally, I'd like to have something like:
+* **CI:**
+  * Build test image
+  * Run tests
+  * Build release candidate image
+* **CD:**
+  * Push release candidate image to AWS ECR
+  * Tag release candidate as "release" on AWS ECR
+  * **Deploy to X**
+    * Deploy to Kubernetes development
+    * Deploy to Kubernetes staging
+    * Deploy to Kubernetes production
+
+By doing so, I could make the CI pipeline even shorter and our developers would received automated feedbacks faster.
+
+That would give something like:
+
+[![BuildKit traces exported and visualized with Jaeger](/2020-09-13-migrate-to-buildkit/moving-out-docker-push-to-cd.png)](/2020-09-13-migrate-to-buildkit/moving-out-docker-push-to-cd.png)
